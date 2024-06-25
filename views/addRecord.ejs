@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Passenger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label, input, select, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="file"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>New Passenger</h1>
+    <form id="addRecordForm" method="POST" action="/addRecord" enctype="multipart/form-data">
+        <br>
+        <div id="columns">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" placeholder="Surname" required>
+
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
+
+            <label for="passport_number">Passport Number:</label>
+            <input type="text" id="passport_number" name="passport_number" placeholder="Passport Number" required>
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" placeholder="Country" required>
+
+            <label for="ticket_number">Ticket Number:</label>
+            <input type="text" id="ticket_number" name="ticket_number" placeholder="Ticket Number" required>
+
+            <label for="has_booking">Has booking?</label>
+            <select id="has_booking" name="has_booking" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+
+            <div id="bookingDetails" style="display: none;">
+                <label for="booking_number">Booking Number:</label>
+                <input type="text" id="booking_number" name="booking_number" placeholder="Booking Number">
+            </div>
+
+            <label for="has_car">Has car?</label>
+            <select id="has_car" name="has_car" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+
+            <div id="carDetails" style="display: none;">
+                <label for="car_type">Car Type:</label>
+                <input type="text" id="car_type" name="car_type" placeholder="Car Type">
+                <label for="car_brand">Car Brand:</label>
+                <input type="text" id="car_brand" name="car_brand" placeholder="Car Brand">
+                <label for="registration_country">Registration Country:</label>
+                <input type="text" id="car_number" name="car_number" placeholder="Car Number"><label for="car_number">Car Number:</label>
+                <input type="text" id="car_number" name="registration_country" placeholder="Car Number">
+                <label for="document_scan">Document Scan:</label>
+                <input type="file" id="document_scan" name="document_scan">
+                <label for="car_payment">Car Payment:</label>
+                <input type="text" id="car_payment" name="car_payment" placeholder="Car Payment">
+            </div>
+        </div>
+        <button type="submit">Add Record</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('has_booking').addEventListener('change', function() {
+        const bookingDetails = document.getElementById('bookingDetails');
+        if (this.value === 'Yes') {
+            bookingDetails.style.display = 'block';
+        } else {
+            bookingDetails.style.display = 'none';
+        }
+    });
+
+    document.getElementById('has_car').addEventListener('change', function() {
+        const carDetails = document.getElementById('carDetails');
+        if (this.value === 'Yes') {
+            carDetails.style.display = 'block';
+        } else {
+            carDetails.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

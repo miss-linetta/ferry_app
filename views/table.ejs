@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= tableName.charAt(0).toUpperCase() + tableName.slice(1) %> Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .add-record-btn {
+            display: block;
+            width: 150px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .add-record-btn:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        .actions {
+            text-align: center;
+        }
+        .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .edit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+        .delete-btn:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+<h1><%= tableName.charAt(0).toUpperCase() + tableName.slice(1) %> Table</h1>
+<a href="/addRecord" class="add-record-btn">Add Record</a>
+<table>
+    <tr>
+        <!-- Define table headers dynamically -->
+        <% Object.keys(rows[0]).forEach(key => { %>
+            <th><%= key %></th>
+        <% }); %>
+        <!-- Add empty th for buttons -->
+        <th>Actions</th>
+    </tr>
+    <!-- Iterate over rows to display data -->
+    <% rows.forEach(row => { %>
+        <tr>
+            <% Object.values(row).forEach(value => { %>
+                <td><%= value %></td>
+            <% }); %>
+            <!-- Add column for buttons -->
+            <td class="actions">
+                <!-- Edit button -->
+                <button class="edit-btn" onclick="editPassenger('<%= row.id %>')">Edit</button>
+                <!-- Delete button -->
+                <button class="delete-btn" onclick="deletePassenger('<%= row.id %>')">Delete</button>
+            </td>
+        </tr>
+    <% }); %>
+</table>
+<!-- Script to handle edit and delete button click -->
+<script>
+    function editPassenger(passengerId) {
+        // Redirect to edit passenger page with the specific passenger ID
+        window.location.href = `/editPassenger/${passengerId}`;
+    }
+
+    function deletePassenger(passengerId) {
+        // Send AJAX request to delete passenger
+        fetch(`/deletePassenger/${passengerId}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Reload the page after successful deletion
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+</script>
+</body>
+</html>
